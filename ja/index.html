@@ -145,7 +145,7 @@ footer { color: var(--muted); font-size: 13px; margin-top: 28px; }
 
 <script>
 const T = {"cycles": [["毎月", 1], ["3ヶ月", 3], ["半年", 6], ["毎年", 12], ["2年", 24]], "categories": ["動画・音楽", "学習・書籍", "クラウド・ソフト", "ゲーム", "健康・ジム", "ニュース・情報", "生活・日用品", "金融・保険", "その他"], "decisions": ["継続", "見直し", "解約"], "empty": "まだ登録がありません。上のフォームから追加するか、サンプルを表示してください。", "decisionLabel": "判断", "remove": "削除", "confirmClear": "このブラウザに保存したサブスクをすべて削除しますか?", "csvHead": ["サービス名", "カテゴリ", "料金", "支払周期", "月額換算", "判断"], "locale": "ja-JP", "decimals": 0, "example": [{"name": "動画配信サービスA", "category": 0, "price": 990, "cycle": 0, "decision": 0}, {"name": "音楽配信サービスB", "category": 0, "price": 1080, "cycle": 0, "decision": 0}, {"name": "クラウドストレージC", "category": 2, "price": 12000, "cycle": 3, "decision": 0}, {"name": "英会話アプリD", "category": 1, "price": 3980, "cycle": 0, "decision": 2}, {"name": "ジム会員E", "category": 4, "price": 8000, "cycle": 0, "decision": 1}]};
-const PRODUCT_URL = "";
+const PRODUCT_URL = "https://buy.polar.sh/polar_cl_gOZ5puqXVLmtQGVDqQzk2ZUX6XSz4rh0z7RET3r8ZFX";
 const KEY = "subcalc.v1";
 const nf = new Intl.NumberFormat(T.locale, { minimumFractionDigits: T.decimals, maximumFractionDigits: T.decimals });
 const fmt = n => nf.format(n);

@@ -146,7 +146,7 @@ footer { color: var(--muted); font-size: 13px; margin-top: 28px; }
 
 <script>
 const T = {"cycles": [["Monthly", 1], ["Quarterly", 3], ["Every 6 months", 6], ["Yearly", 12], ["Every 2 years", 24]], "categories": ["Video & Music", "Learning & Books", "Cloud & Software", "Gaming", "Health & Fitness", "News & Info", "Home & Living", "Finance & Insurance", "Other"], "decisions": ["Keep", "Review", "Cancel"], "empty": "No subscriptions yet. Add one above or load the example.", "decisionLabel": "Decision", "remove": "Remove", "confirmClear": "Delete all subscriptions from this browser?", "csvHead": ["Service", "Category", "Price", "Billing cycle", "Per month", "Decision"], "locale": "en-US", "decimals": 2, "example": [{"name": "Streaming Service A", "category": 0, "price": 9.99, "cycle": 0, "decision": 0}, {"name": "Music Service B", "category": 0, "price": 10.99, "cycle": 0, "decision": 0}, {"name": "Cloud Storage C", "category": 2, "price": 99, "cycle": 3, "decision": 0}, {"name": "Language App D", "category": 1, "price": 29.99, "cycle": 0, "decision": 2}, {"name": "Gym Membership E", "category": 4, "price": 45, "cycle": 0, "decision": 1}]};
-const PRODUCT_URL = "";
+const PRODUCT_URL = "https://buy.polar.sh/polar_cl_gOZ5puqXVLmtQGVDqQzk2ZUX6XSz4rh0z7RET3r8ZFX";
 const KEY = "subcalc.v1";
 const nf = new Intl.NumberFormat(T.locale, { minimumFractionDigits: T.decimals, maximumFractionDigits: T.decimals });
 const fmt = n => nf.format(n);
