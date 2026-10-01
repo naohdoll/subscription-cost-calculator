@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Subscription Cost Calculator — See What You Really Pay Per Month and Year</title>
+<meta name="description" content="Free subscription cost calculator. Add your subscriptions to see your monthly and yearly total, a breakdown by category, and how much you&#x27;d save by cancelling. No sign-up; data stays in your browser.">
+<link rel="canonical" href="https://naohdoll.github.io/subscription-cost-calculator/">
+<link rel="alternate" hreflang="en" href="https://naohdoll.github.io/subscription-cost-calculator/">
+<link rel="alternate" hreflang="ja" href="https://naohdoll.github.io/subscription-cost-calculator/ja/">
+<link rel="alternate" hreflang="x-default" href="https://naohdoll.github.io/subscription-cost-calculator/">
+<meta property="og:title" content="Subscription Cost Calculator — See What You Really Pay Per Month and Year">
+<meta property="og:description" content="Free subscription cost calculator. Add your subscriptions to see your monthly and yearly total, a breakdown by category, and how much you&#x27;d save by cancelling. No sign-up; data stays in your browser.">
+<meta property="og:type" content="website">
+<style>
+:root {
+  --bg: #F6F8FB; --card: #FFFFFF; --text: #1F2937; --muted: #5B6676; --line: #E3E8EF;
+  --brand: #1F3A5F; --brand-2: #2C5282; --accent: #FFD9A8; --warn: #FECACA; --warn-text: #991B1B;
+  --review: #FEF08A; --bar: #4472C4;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0F1720; --card: #17212C; --text: #E6EBF1; --muted: #9AA7B5; --line: #2A3644;
+          --brand: #9CC3F5; --brand-2: #7FB0EE; --accent: #5C3B12; --warn: #4A1D1D; --warn-text: #FCA5A5;
+          --review: #4A4210; --bar: #6E9BE6; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text);
+       font: 16px/1.6 system-ui, -apple-system, "Segoe UI", "Hiragino Sans", "Yu Gothic UI", Meiryo, sans-serif; }
+.wrap { max-width: 960px; margin: 0 auto; padding: 24px 16px 64px; }
+header { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+header .logo { font-weight: 700; color: var(--brand); }
+header a { color: var(--muted); font-size: 14px; }
+h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.2; margin: 28px 0 8px; color: var(--brand); }
+.lead { color: var(--muted); margin: 0 0 24px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px; margin-bottom: 18px; }
+form { display: grid; grid-template-columns: 2fr 1fr 1.3fr 1.5fr 1.1fr auto; gap: 10px; align-items: end; }
+label { display: grid; gap: 4px; font-size: 13px; color: var(--muted); }
+input, select, button { font: inherit; padding: 9px 10px; border-radius: 8px; border: 1px solid var(--line);
+                        background: var(--card); color: var(--text); min-width: 0; }
+button { cursor: pointer; }
+button.primary { background: var(--brand); border-color: var(--brand); color: var(--card); font-weight: 700; }
+.tools { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.tools button { font-size: 14px; padding: 6px 12px; }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 18px; }
+.stat { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+.stat .l { font-size: 13px; color: var(--muted); }
+.stat .v { font-size: 26px; font-weight: 700; color: var(--brand); font-variant-numeric: tabular-nums; }
+.stat.save { background: var(--warn); } .stat.save .v { color: var(--warn-text); }
+table { width: 100%; border-collapse: collapse; font-size: 15px; }
+th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--line); }
+th { font-size: 13px; color: var(--muted); font-weight: 600; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+td select { padding: 4px 6px; font-size: 14px; }
+tr.cancel td { background: var(--warn); } tr.review td { background: var(--review); }
+.del { border: none; background: none; color: var(--muted); font-size: 18px; padding: 0 6px; }
+.empty { color: var(--muted); text-align: center; padding: 18px; }
+.bars { display: grid; gap: 8px; }
+.bar-row { display: grid; grid-template-columns: 160px 1fr 90px; gap: 10px; align-items: center; font-size: 14px; }
+.bar { height: 14px; background: var(--bar); border-radius: 4px; min-width: 2px; }
+.bar-row .n { text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); }
+.cta { background: linear-gradient(135deg, #1F3A5F, #2C5282); color: #fff; border: none; }
+.cta h2 { margin: 0 0 6px; font-size: 20px; color: #fff; }
+.cta p { margin: 0 0 14px; color: #DCE6F2; }
+.cta a { display: inline-block; background: #FFD9A8; color: #7C2D12; font-weight: 700; padding: 10px 18px;
+         border-radius: 999px; text-decoration: none; }
+h2 { font-size: 20px; margin: 0 0 12px; color: var(--brand); }
+.faq h3 { font-size: 16px; margin: 18px 0 4px; }
+.faq p { margin: 0; color: var(--muted); }
+footer { color: var(--muted); font-size: 13px; margin-top: 28px; }
+.table-wrap { overflow-x: auto; }
+@media (max-width: 760px) {
+  form { grid-template-columns: 1fr 1fr; }
+  form .name { grid-column: 1 / -1; }
+  form button.primary { grid-column: 1 / -1; }
+  .stats { grid-template-columns: 1fr 1fr; }
+  .bar-row { grid-template-columns: 110px 1fr 70px; }
+  .opt { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="logo">Subscription Cost Calculator</span>
+    <a href="ja/" hreflang="ja">日本語</a>
+  </header>
+
+  <h1>How much do your subscriptions really cost?</h1>
+  <p class="lead">Add each subscription to see your monthly and yearly total instantly. Free, no sign-up, and your data never leaves your browser.</p>
+
+  <section class="card" aria-label="Add a subscription">
+    <form id="add">
+      <label class="name">Service<input name="svc" required maxlength="60" placeholder="e.g. Video streaming"></label>
+      <label>Price<input name="price" type="number" min="0" step="any" required inputmode="decimal"></label>
+      <label>Billing cycle<select name="cycle"></select></label>
+      <label>Category<select name="category"></select></label>
+      <label>Decision<select name="decision"></select></label>
+      <button class="primary" type="submit">Add</button>
+    </form>
+    <div class="tools">
+      <button type="button" id="example">Load example</button>
+      <button type="button" id="csv">Export CSV</button>
+      <button type="button" id="clear">Clear all</button>
+    </div>
+  </section>
+
+  <section class="stats" aria-live="polite">
+    <div class="stat"><div class="l">Per month</div><div class="v" id="s-month">0</div></div>
+    <div class="stat"><div class="l">Per year</div><div class="v" id="s-year">0</div></div>
+    <div class="stat"><div class="l">Subscriptions</div><div class="v" id="s-count">0</div></div>
+    <div class="stat save"><div class="l">Yearly savings if you cancel</div><div class="v" id="s-save">0</div></div>
+  </section>
+
+  <section class="card">
+    <h2>Your subscriptions</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Service</th><th class="opt">Category</th><th class="num opt">Price</th><th class="opt">Billing cycle</th>
+                   <th class="num">Per month</th><th>Decision</th><th></th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Monthly cost by category</h2>
+    <div class="bars" id="bars"></div>
+  </section>
+
+  <section class="card cta" id="cta" hidden>
+    <h2>Want renewal alerts and a printable dashboard?</h2>
+    <p>The Excel version adds next-renewal dates with alerts, 1-5 ratings, room for 100 subscriptions and a dashboard with a chart. English and Japanese files included.</p>
+    <a id="cta-link" href="#" rel="noopener">Get the Excel template</a>
+  </section>
+
+  <section class="card faq">
+    <h2>FAQ</h2>
+    <h3>How do I calculate the monthly cost of a yearly subscription?</h3><p>Divide the yearly price by 12. For other cycles, divide by the number of months in the cycle: 3 for quarterly, 6 for every six months, 24 for every two years. This calculator does it for you.</p>
+    <h3>Is my data stored anywhere?</h3><p>Only in your own browser (local storage), so it is still there when you come back on the same device. Nothing is sent to a server. Use &quot;Clear all&quot; to delete it.</p>
+    <h3>Which currency does it use?</h3><p>Any. Enter every price in the currency you pay in; totals are shown in the same currency.</p>
+    <h3>How can I cut my subscription costs?</h3><p>List everything first: bank and card statements show charges that are easy to forget. Then mark subscriptions you rarely use as Review or Cancel, check whether a yearly plan is cheaper for the ones you keep, and look for overlapping services, such as two music or cloud storage plans.</p>
+  </section>
+
+  <footer>Free tool. Figures are estimates based on what you enter; always check actual charges with each service.</footer>
+</div>
+
+<script>
+const T = {"cycles": [["Monthly", 1], ["Quarterly", 3], ["Every 6 months", 6], ["Yearly", 12], ["Every 2 years", 24]], "categories": ["Video & Music", "Learning & Books", "Cloud & Software", "Gaming", "Health & Fitness", "News & Info", "Home & Living", "Finance & Insurance", "Other"], "decisions": ["Keep", "Review", "Cancel"], "empty": "No subscriptions yet. Add one above or load the example.", "decisionLabel": "Decision", "remove": "Remove", "confirmClear": "Delete all subscriptions from this browser?", "csvHead": ["Service", "Category", "Price", "Billing cycle", "Per month", "Decision"], "locale": "en-US", "decimals": 2, "example": [{"name": "Streaming Service A", "category": 0, "price": 9.99, "cycle": 0, "decision": 0}, {"name": "Music Service B", "category": 0, "price": 10.99, "cycle": 0, "decision": 0}, {"name": "Cloud Storage C", "category": 2, "price": 99, "cycle": 3, "decision": 0}, {"name": "Language App D", "category": 1, "price": 29.99, "cycle": 0, "decision": 2}, {"name": "Gym Membership E", "category": 4, "price": 45, "cycle": 0, "decision": 1}]};
+const PRODUCT_URL = "";
+const KEY = "subcalc.v1";
+const nf = new Intl.NumberFormat(T.locale, { minimumFractionDigits: T.decimals, maximumFractionDigits: T.decimals });
+const fmt = n => nf.format(n);
+let items = [];
+
+function load() { try { items = JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { items = []; } }
+function save() { try { localStorage.setItem(KEY, JSON.stringify(items)); } catch (e) {} }
+const monthly = it => it.price / T.cycles[it.cycle][1];
+
+function fill(sel, list) { sel.innerHTML = list.map((v, i) => `<option value="${i}">${v}</option>`).join(""); }
+function esc(s) { return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+
+function render() {
+  const total = items.reduce((a, it) => a + monthly(it), 0);
+  const cancel = items.filter(it => it.decision === 2).reduce((a, it) => a + monthly(it), 0);
+  document.getElementById("s-month").textContent = fmt(total);
+  document.getElementById("s-year").textContent = fmt(total * 12);
+  document.getElementById("s-count").textContent = items.length;
+  document.getElementById("s-save").textContent = fmt(cancel * 12);
+
+  const rows = document.getElementById("rows");
+  if (!items.length) { rows.innerHTML = `<tr><td colspan="7" class="empty">${T.empty}</td></tr>`; }
+  else {
+    const order = items.map((it, i) => i).sort((a, b) => monthly(items[b]) - monthly(items[a]));
+    rows.innerHTML = order.map(i => {
+      const it = items[i];
+      const cls = it.decision === 2 ? "cancel" : it.decision === 1 ? "review" : "";
+      const opts = T.decisions.map((d, j) => `<option value="${j}"${j === it.decision ? " selected" : ""}>${d}</option>`).join("");
+      return `<tr class="${cls}"><td>${esc(it.name)}</td><td class="opt">${T.categories[it.category]}</td>
+        <td class="num opt">${fmt(it.price)}</td><td class="opt">${T.cycles[it.cycle][0]}</td><td class="num">${fmt(monthly(it))}</td>
+        <td><select data-i="${i}" aria-label="${T.decisionLabel}">${opts}</select></td>
+        <td><button class="del" data-del="${i}" aria-label="${T.remove}">×</button></td></tr>`;
+    }).join("");
+  }
+
+  const byCat = T.categories.map((c, i) => [c, items.filter(it => it.category === i).reduce((a, it) => a + monthly(it), 0)])
+    .filter(x => x[1] > 0).sort((a, b) => b[1] - a[1]);
+  const max = byCat.length ? byCat[0][1] : 1;
+  document.getElementById("bars").innerHTML = byCat.length
+    ? byCat.map(([c, v]) => `<div class="bar-row"><span>${c}</span><div class="bar" style="width:${(v / max * 100).toFixed(1)}%"></div><span class="n">${fmt(v)}</span></div>`).join("")
+    : `<div class="empty">${T.empty}</div>`;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("add"), f = form.elements;
+  fill(f.cycle, T.cycles.map(c => c[0])); fill(f.category, T.categories); fill(f.decision, T.decisions);
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    const price = parseFloat(f.price.value);
+    if (!f.svc.value.trim() || !(price >= 0)) return;
+    items.push({ name: f.svc.value.trim(), price, cycle: +f.cycle.value, category: +f.category.value, decision: +f.decision.value });
+    save(); render(); form.reset(); f.svc.focus();
+  });
+  document.getElementById("rows").addEventListener("change", e => {
+    if (e.target.dataset.i !== undefined) { items[+e.target.dataset.i].decision = +e.target.value; save(); render(); }
+  });
+  document.getElementById("rows").addEventListener("click", e => {
+    if (e.target.dataset.del !== undefined) { items.splice(+e.target.dataset.del, 1); save(); render(); }
+  });
+  document.getElementById("example").addEventListener("click", () => { items = T.example.map(x => ({...x})); save(); render(); });
+  document.getElementById("clear").addEventListener("click", () => { if (confirm(T.confirmClear)) { items = []; save(); render(); } });
+  document.getElementById("csv").addEventListener("click", () => {
+    const head = T.csvHead.join(",");
+    const body = items.map(it => [it.name, T.categories[it.category], it.price, T.cycles[it.cycle][0], monthly(it).toFixed(2), T.decisions[it.decision]]
+      .map(v => `"${String(v).replace(/"/g, '""')}"`).join(",")).join("\n");
+    const blob = new Blob(["﻿" + head + "\n" + body], { type: "text/csv" });
+    const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: "subscriptions.csv" });
+    a.click(); URL.revokeObjectURL(a.href);
+  });
+  if (PRODUCT_URL) { document.getElementById("cta-link").href = PRODUCT_URL; document.getElementById("cta").hidden = false; }
+  load();
+  if (new URLSearchParams(location.search).has("demo")) items = T.example.map(x => ({...x}));
+  render();
+});
+</script>
+</body>
+</html>
